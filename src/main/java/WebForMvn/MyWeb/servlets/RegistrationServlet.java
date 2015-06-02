@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import WebForMvn.MyWeb.resources.Container;
-import WebForMvn.MyWeb.resources.DbInitializer;
 
 
 public class RegistrationServlet extends HttpServlet {
@@ -87,8 +86,8 @@ public class RegistrationServlet extends HttpServlet {
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		
-		DbInitializer dbIni = new DbInitializer();///////////////////////////////////////////////////////////
-		dbIni.generateDb();/////////////////////////////////////////////////////////////////////////////////////
+		//DbInitializer dbIni = new DbInitializer();///////////////////////////////////////////////////////////
+		//dbIni.generateDb();/////////////////////////////////////////////////////////////////////////////////////
 
 		if (checkPass(password1, password2) && checkLog(login)) {
 			creationAccount(login, email, firstName, lastName, password2);
@@ -167,11 +166,14 @@ public class RegistrationServlet extends HttpServlet {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			
-			con = DriverManager.getConnection(Container.getSqlUrl(), Container.getSqlUser(), Container.getSqlPassword());
+			con = DriverManager.getConnection
+					(Container.getSqlUrl(), 
+					 Container.getSqlUser(), 
+					 Container.getSqlPassword());
 
 			
 
@@ -186,7 +188,18 @@ public class RegistrationServlet extends HttpServlet {
 			stmt.setString(5, password);
 				
 			stmt.executeUpdate();
-
+			
+			//Lets get The ID of just created account
+			rs = stmt.executeQuery("SELECT accountId FROM `testhub`.`account` where login = \'"+login+"\';");
+			rs.next();
+			int accountId = rs.getInt("accountId");
+			
+			System.out.println("New account ID: "+accountId);
+			
+			//And just set for those ID role "1", which means 'student'
+			stmt.execute("INSERT INTO `testhub`.`account_role` (`accountId`, `roleId`) VALUES ('"+accountId+"', '"+1+"');");
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

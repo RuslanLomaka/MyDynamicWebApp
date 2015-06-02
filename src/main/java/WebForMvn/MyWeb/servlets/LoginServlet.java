@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +22,15 @@ import WebForMvn.MyWeb.resources.Container;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		PrintWriter tmp = resp.getWriter();
-		tmp.println("azaza");
+		
 		
 		
 		HttpSession session = req.getSession();
+		session.setMaxInactiveInterval(10);
+		
+		ServletContext context =  session.getServletContext();
 		
 
 		resp.setContentType("text/html;charset=UTF-8");
@@ -58,8 +61,14 @@ public class LoginServlet extends HttpServlet {
 					+"</head>"
 					+"<body>"
 					
-					+"<h1>Welcome "+(String) session.getAttribute("sessionLogin")+"!</h1>"
-					
+					+"<h1>Welcome "+(String) session.getAttribute("sessionLogin")
+					+".<br> Session hashcode: "+session.hashCode()
+					+"<br>"
+					+"<h1> Responce hashcode"+resp.hashCode()+" !</h1>"
+					+"<br>"
+					+"<h1> Request hashcode"+req.hashCode()+" !</h1>"
+					+"<br>"
+					+"<h1> Context hashcode"+context.hashCode()+" !</h1>"
 					+"</body>"
 					+"</html>";
 			

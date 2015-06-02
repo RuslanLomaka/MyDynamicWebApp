@@ -10,13 +10,7 @@
   <name>MyWeb</name>
   <url>http://maven.apache.org</url>
   
-  <repositories>
   
-  <repository>
-  <id>Export</id>
-  </repository>
-  
-  </repositories>
 
   <dependencies>
     <dependency>
