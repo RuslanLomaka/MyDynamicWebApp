@@ -9,8 +9,8 @@ public class DbInitializer {
 	static Connection con = null;
 	static Statement stmt = null;
 	
-	static String createSchemaStatement = "CREATE SCHEMA `"+Container.getSqlSchema()+"`;";
-	
+	//static String createSchemaStatement = "CREATE SCHEMA `"+Container.getSqlSchema()+"`;";
+	static String createSchemaStatement = "CREATE SCHEMA `testhub`;";
 	static String createRoleTableStatement = " CREATE TABLE `"+Container.getSqlSchema()+"`.`role` "
 			+ "( `roleId` int(11) NOT NULL, "
 			+ "`name` varchar(50) NOT NULL, "
@@ -76,7 +76,7 @@ public class DbInitializer {
 	};
 	public void generateDb(){
 		
-		executeStatement(createSchemaStatement);
+		//executeStatement(createSchemaStatement);
 		
 		executeStatement(createAccountTableStatement);
 		executeStatement(createRoleTableStatement);
@@ -86,3 +86,15 @@ public class DbInitializer {
 	}
 	
 }
+/*CREATE TABLE `firsttest` (
+`question` varchar(255) NOT NULL,
+`var1` varchar(45) NOT NULL,
+`var1ans` tinyint(1) NOT NULL,
+`var2` varchar(45) NOT NULL,
+`var2ans` tinyint(1) NOT NULL,
+`var3` varchar(45) DEFAULT NULL,
+`var3ans` tinyint(1) DEFAULT NULL,
+`var4` varchar(45) DEFAULT NULL,
+`var4ans` tinyint(1) DEFAULT NULL,
+PRIMARY KEY (`question`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8*/

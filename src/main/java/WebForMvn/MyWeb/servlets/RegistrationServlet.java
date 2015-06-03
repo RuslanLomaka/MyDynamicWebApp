@@ -75,6 +75,8 @@ public class RegistrationServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		//DbInitializer dbIni = new DbInitializer();///////////////////////////////////////////////////////////
+		//dbIni.generateDb();/////////////////////////////////////////////////////////////////////////////////////
 
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
@@ -86,9 +88,7 @@ public class RegistrationServlet extends HttpServlet {
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		
-		//DbInitializer dbIni = new DbInitializer();///////////////////////////////////////////////////////////
-		//dbIni.generateDb();/////////////////////////////////////////////////////////////////////////////////////
-
+		
 		if (checkPass(password1, password2) && checkLog(login)) {
 			creationAccount(login, email, firstName, lastName, password2);
 		} else {
@@ -120,7 +120,7 @@ public class RegistrationServlet extends HttpServlet {
 
 			stmt = con.createStatement();
 
-			rs = stmt.executeQuery("SELECT login FROM testhub.account;");
+			rs = stmt.executeQuery("SELECT login FROM `"+Container.getSqlSchema()+"`.`account`;");
 
 			while (rs.next()) {
 				if (!(log.equals(rs.getString("login")))) {

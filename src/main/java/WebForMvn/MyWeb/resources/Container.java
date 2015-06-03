@@ -3,9 +3,9 @@ package WebForMvn.MyWeb.resources;
 public class Container {
 	private static final String SQL_URL="jdbc:mysql://localhost:3306/testhub";
 	private static final String SQL_USER="root";
-	private static final String SQL_PASSWORD="root";
+	private static final String SQL_PASSWORD="password";
 	private static final String JBDC_DRIVER="com.mysql.jdbc.Driver";
-	private static final String SQL_SCHEMA="testhub";//It is necessary only for creation DB
+	private static final String SQL_SCHEMA="testhub";
 	
 	
 	public static String getSqlSchema() {
