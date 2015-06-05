@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,6 +24,7 @@ import WebForMvn.MyWeb.resources.User;
 public class RedactProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		Connection con = null;
@@ -31,7 +32,12 @@ public class RedactProfileServlet extends HttpServlet {
 		ResultSet accountResultSet = null;
 		
 		User user = null;
-		LinkedList <User> userList = new LinkedList<>();
+		HashMap<Integer,User> userMap = new HashMap<Integer, User>();
+		
+		userMap.values();
+		
+		
+		
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -53,7 +59,7 @@ public class RedactProfileServlet extends HttpServlet {
 				
 				user = new User(idNum, firstName, lastName, login, email, roleId);
 				System.out.println();
-				userList.add(user);
+				userMap.put(idNum, user);
 			};
 			
 			
@@ -76,9 +82,10 @@ public class RedactProfileServlet extends HttpServlet {
 			}
 		}
 		System.out.println("return user");
-		
 		HttpSession session = request.getSession();
-		session.setAttribute("userList", userList);
+		session.setAttribute("userMap", userMap);
+		
+		//redirection to JSP page
 		RequestDispatcher reqDispatcher = getServletConfig().getServletContext().getRequestDispatcher("/AllUsersView.jsp");
 		reqDispatcher.forward(request,response);
 		
@@ -104,6 +111,10 @@ public class RedactProfileServlet extends HttpServlet {
 			reqDispatcher.forward(request,response);
 			
 	}
+	
+	
+	
+	
 	
 	public static User getAccountInfo(int idNum) {
 
